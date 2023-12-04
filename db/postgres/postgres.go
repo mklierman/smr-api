@@ -118,16 +118,6 @@ func Save(ctx context.Context, object interface{}) {
 	DBCtx(ctx).Save(object)
 }
 
-func Delete(ctx context.Context, object interface{}) {
-	DBCtx(ctx).Delete(object)
-	ClearCache()
-}
-
-func DeleteForced(ctx context.Context, object interface{}) {
-	DBCtx(ctx).Unscoped().Delete(object)
-	ClearCache()
-}
-
 func DBCtx(ctx context.Context) *gorm.DB {
 	if ctx != nil {
 		dbCtx := DBFromContext(ctx)
@@ -139,10 +129,6 @@ func DBCtx(ctx context.Context) *gorm.DB {
 	}
 
 	return db
-}
-
-func ClearCache() {
-	dbCache.Flush()
 }
 
 func EnableDebug() {
